@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="hoticecream.ru.insetssandbox.MainActivity">
+    tools:context="hoticecream.ru.insetssandbox.ru.hoticecream.insetssandbox.MainActivity">
 
     <FrameLayout
         android:id="@+id/container"

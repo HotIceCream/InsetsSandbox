@@ -1,4 +1,4 @@
-package hoticecream.ru.insetssandbox;
+package ru.hoticecream.insetssandbox;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

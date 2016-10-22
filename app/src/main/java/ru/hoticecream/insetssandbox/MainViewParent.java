@@ -1,4 +1,4 @@
-package hoticecream.ru.insetssandbox;
+package ru.hoticecream.insetssandbox;
 
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.view.ViewPager;
