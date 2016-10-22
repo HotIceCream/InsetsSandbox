@@ -1,0 +1,8 @@
+<tabs>
+    <tab
+        id="@+id/tab_first"
+        title="First" />
+    <tab
+        id="@+id/tab_second"
+        title="Second" />
+</tabs>

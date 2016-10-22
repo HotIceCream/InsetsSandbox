@@ -1,5 +1,8 @@
 package hoticecream.ru.insetssandbox;
 
+import android.support.annotation.IdRes;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,48 +12,65 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.roughike.bottombar.BottomBar;
+import com.roughike.bottombar.OnTabSelectListener;
+
 import java.util.Arrays;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
-    private RecyclerView recycler;
+public class MainActivity extends AppCompatActivity implements MainViewParent {
+
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.tab_layout)
+    TabLayout tabLayout;
+    @BindView(R.id.bottom_bar)
+    BottomBar bottomBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setSupportActionBar((Toolbar)findViewById(R.id.toolbar));
-        recycler = (RecyclerView) findViewById(R.id.recycler);
-        recycler.setLayoutManager(new LinearLayoutManager(this));
-        recycler.setAdapter(new SampleAdapter());
+        ButterKnife.bind(this);
+        setSupportActionBar(toolbar);
+        bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
+            @Override
+            public void onTabSelected(@IdRes int tabId) {
+                switch (tabId) {
+                    case R.id.tab_first:
+                        showFirst();
+                        break;
+                    case R.id.tab_second:
+                        showSecond();
+                        break;
+
+                }
+            }
+        });
+
     }
 
-    public static class SampleAdapter extends RecyclerView.Adapter<SampleHolder> {
-
-        private List<Object> items = Arrays.asList(new Object(), new Object(), new Object(), new Object(), new Object(), new Object(), new Object(), new Object(), new Object(), new Object());
-
-        @Override
-        public SampleHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new SampleHolder(LayoutInflater.from(parent.getContext())
-            .inflate(R.layout.item_sample, parent, false));
-        }
-
-        @Override
-        public void onBindViewHolder(SampleHolder holder, int position) {
-
-        }
-
-        @Override
-        public int getItemCount() {
-            return items.size();
-        }
+    private void showSecond() {
+        initTabLayout(null);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, new SecondFragment())
+                .commit();
     }
 
-    public static class SampleHolder extends RecyclerView.ViewHolder {
-
-        public SampleHolder(View itemView) {
-            super(itemView);
-        }
+    private void showFirst() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, new FirstFragment())
+                .commit();
     }
+
+    @Override
+    public void initTabLayout(ViewPager viewpager) {
+        tabLayout.setVisibility(viewpager == null ? View.GONE : View.VISIBLE);
+        tabLayout.setupWithViewPager(viewpager);
+    }
+
+
 }
